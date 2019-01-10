@@ -8,19 +8,24 @@ const app=express();
 
  const bookRouter=express.Router();
  const authRouter=express.Router();
+ const newRouter=express.Router();
 
  const con = mysql.createConnection({
     host: "localhost",
-    user: "wishwa",
+    user: "root",
     port:3306,
     database: "newdb",
-    password: "Egxduvwz@2116"
+    password: "egxduvwz"
   });
   
   con.connect(function(err) {
     if (err) throw err;
     console.log("Connected to DB!");
   });
+
+  newRouter.get('/a',function(req,res) {
+   res.sendFile(__dirname +'/main.html');
+ });
 
  authRouter.get('/authors',(req,res)=>{
     const query = "select * from author";
@@ -83,6 +88,7 @@ const app=express();
 
  app.use('/api',bookRouter);
  app.use('/api',authRouter);
+ app.use('/api',newRouter);
 
  app.listen(port,()=>{
     console.log("Server up on PORT:"+port);
